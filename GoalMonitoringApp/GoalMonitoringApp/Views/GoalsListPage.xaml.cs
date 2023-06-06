@@ -28,7 +28,7 @@ namespace GoalMonitoringApp.Views
                 GoalFactory goalFactory = new GoalFactory();
 
                 // Create an instance of GoalDatabase with the dbPath
-                GoalDatabase database = new GoalDatabase(AppSettings.DatabasePath);
+                GoalDatabase database = new GoalDatabase();
 
                 // Create an instance of GoalRepository with the GoalDatabase instance
                 IGoalRepository goalRepository = new GoalRepository(database);

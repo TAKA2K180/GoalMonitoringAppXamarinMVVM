@@ -21,7 +21,7 @@ namespace GoalMonitoringApp.Views
             InitializeComponent();
 
 
-            var database = new GoalDatabase(DbHelper.cs);
+            var database = new GoalDatabase();
             var goalRepository = new GoalRepository(database);
             var navigation = Navigation;
             BindingContext = new GoalEditorViewModel(goalRepository, Navigation);

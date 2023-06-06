@@ -6,6 +6,8 @@ using GoalMonitoringApp.Core.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
 using GoalMonitoringApp.Commands;
+using Xamarin.Essentials;
+using Android.Widget;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -97,20 +99,39 @@ namespace GoalMonitoringApp.ViewModels
 
         private async void SaveGoal()
         {
-            // Create a new instance of the Goal model with the entered data
-            var goal = new Goals
+            try
             {
-                Title = Title,
-                Description = Description,
-                TargetDate = TargetDate,
-                CreatedDate = DateTime.Now,
-            };
+                // Create a new instance of the Goal model with the entered data
+                if (this.Title != "" && this.Description != "" && this.Title != null && this.Description != null)
+                {
+                    var goal = new Goals
+                    {
+                        Title = Title,
+                        Description = Description,
+                        TargetDate = TargetDate,
+                        CreatedDate = DateTime.Now,
+                        Id = Guid.Empty
+                    };
 
-            // Save the goal using the repository
-            await goalRepository.SaveGoalAsync(goal);
+                    // Save the goal using the repository
+                    await goalRepository.SaveGoalAsync(goal);
 
-            // Raise the GoalAdded event
-            GoalAdded?.Invoke(this, EventArgs.Empty);
+                    // Raise the GoalAdded event
+                    GoalAdded?.Invoke(this, EventArgs.Empty);
+
+                    await Application.Current.MainPage.DisplayAlert("Success", "Goal saved", "OK");
+                    this.Title = "";
+                    this.Description = "";
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Warning", "Please fill required fields", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
         }
 
         public void Cancel()

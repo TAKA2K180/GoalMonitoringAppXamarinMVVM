@@ -15,19 +15,20 @@ namespace GoalMonitoringApp.Data.Data
     public class GoalDatabase : IGoalRepository
     {
         private SQLiteAsyncConnection database;
-        private AppSettings appSettings;
 
-        public GoalDatabase(string dbPath)
+        public GoalDatabase()
         {
-            database = new SQLiteAsyncConnection(AppSettings.DatabasePath);
-            database.CreateTableAsync<Goals>().ContinueWith(t =>
+            try
             {
-                if (t.IsFaulted && t.Exception != null)
-                {
-                    LogHelpers.SendLogToText(t.Result.ToString());
-                }
-            }, TaskScheduler.Current);
+                database = new SQLiteAsyncConnection(AppSettings.DatabasePath);
+                database.CreateTableAsync<Goals>().Wait();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred: {ex.Message}");
+            }
         }
+
 
         public async Task InitializeDatabaseAsync()
         {
@@ -41,14 +42,21 @@ namespace GoalMonitoringApp.Data.Data
 
         public async Task<int> SaveGoalAsync(Goals goal)
         {
-            if (goal.Id == Guid.Empty)
+            try
             {
-                goal.Id = Guid.NewGuid();
-                return await database.InsertAsync(goal);
+                if (goal.Id == Guid.Empty)
+                {
+                    goal.Id = Guid.NewGuid();
+                    return await database.InsertAsync(goal);
+                }
+                else
+                {
+                    return await database.UpdateAsync(goal);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await database.UpdateAsync(goal);
+                return 0;
             }
         }
 

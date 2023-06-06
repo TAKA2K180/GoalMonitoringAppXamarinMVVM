@@ -1,23 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GoalMonitoringApp.Views.GoalEditorPage">
+             x:Class="GoalMonitoringApp.Views.GoalEditorPage" Title="Add Goal">
     <ContentPage.Content>
-        <StackLayout Margin="20">
-            <Label Text="Goal Title" FontSize="Large" />
-            <Entry Text="{Binding Title}" />
+        <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
 
-            <Label Text="Goal Description" FontSize="Large" />
-            <Entry Text="{Binding Description}" />
+            <Label Text="Goal Editor"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#333333"/>
 
-            <Label Text="Target Date" FontSize="Large" />
-            <DatePicker Date="{Binding TargetDate}" />
+            <Entry Placeholder="Title"
+                   FontSize="18"
+                   TextColor="#333333"
+                   BackgroundColor="#F5F5F5"
+                   HeightRequest="40"/>
 
-            <Label Text="Target Time" FontSize="Large" />
-            <TimePicker Time="{Binding TargetTime}" />
+            <Entry Placeholder="Description"
+                   FontSize="18"
+                   TextColor="#333333"
+                   BackgroundColor="#F5F5F5"
+                   HeightRequest="80"
+                   VerticalOptions="Fill"
+                   Keyboard="Text"
+                   Text="{Binding Description}"/>
 
-            <Button Text="Save" Command="{Binding SaveCommand}" />
-            <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+            <DatePicker
+                Date="{Binding TargetDate}"
+                Format="MM/dd/yyyy"
+                FontSize="18"
+                TextColor="#333333"
+                BackgroundColor="#F5F5F5"/>
+
+            <StackLayout Orientation="Horizontal" Spacing="10" VerticalOptions="Center">
+                <Label Text="Is Finished?"
+                       FontSize="18"
+                       TextColor="#333333"/>
+
+                <Switch
+                    IsToggled="{Binding IsFinished}"
+                    ThumbColor="#FF4081"
+                    OnColor="#FF4081"
+                    />
+            </StackLayout>
+
+            <Button Text="Save"
+                    FontSize="20"
+                    TextColor="#FFFFFF"
+                    BackgroundColor="#FF4081"
+                    CornerRadius="10"
+                    Command="{Binding SaveGoalCommand}"/>
+
+            <Button Text="Cancel"
+                    FontSize="20"
+                    TextColor="#333333"
+                    BackgroundColor="#F5F5F5"
+                    CornerRadius="10"
+                    Command="{Binding CancelCommand}"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

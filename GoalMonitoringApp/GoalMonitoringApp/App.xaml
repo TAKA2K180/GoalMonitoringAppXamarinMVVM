@@ -3,6 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GoalMonitoringApp.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#C2185B</Color>
+            <Color x:Key="SecondaryColor">#FFFFFF</Color>
 
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource SecondaryColor}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryColor}" />
+            </Style>
+
+            <!-- Define other styles for different controls as needed -->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -17,7 +17,7 @@ namespace GoalMonitoringApp.Classes
         public static GoalViewModel CreateGoalViewModel()
         {
             string databasePath = DbHelper.cs;
-            var goalDatabase = new GoalDatabase(databasePath);
+            var goalDatabase = new GoalDatabase();
             var goalRepository = new GoalRepository(goalDatabase);
             return new GoalViewModel(goalRepository);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using GoalMonitoringApp.Commands;
 using GoalMonitoringApp.Core.Models;
 using GoalMonitoringApp.Core.Services;
 using GoalMonitoringApp.Helpers;
@@ -19,7 +20,10 @@ namespace GoalMonitoringApp.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Goals> Goals
+        private ObservableCollection<Goals> _list;
+
+
+        public ObservableCollection<Goals> GoalList
         {
             get { return goals; }
             set
@@ -27,33 +31,106 @@ namespace GoalMonitoringApp.ViewModels
                 if (goals != value)
                 {
                     goals = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Goals)));
+                    OnPropertyChanged("GoalList");
                 }
             }
         }
 
-        public GoalsListViewModel(IGoalRepository goalRepository)
+        private string title;
+        public string Title
         {
-            try
+            get { return title; }
+            set
             {
-                this.goalRepository = goalRepository;
-                LoadGoals();
-            }
-            catch (Exception ex)
-            {
-                LogHelpers.SendLogToText(ex.Message);
+                title = value;
+                OnPropertyChanged("Title");
             }
         }
 
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                OnPropertyChanged("Description");
+            }
+        }
+
+        private DateTime targetDate;
+        public DateTime TargetDate
+        {
+            get { return targetDate; }
+            set
+            {
+                targetDate = value;
+                OnPropertyChanged("TargetDate");
+            }
+        }
+
+        private DateTime _startDate;
+
+        public DateTime StartDate
+        {
+            get { return _startDate; }
+            set { _startDate = value; OnPropertyChanged("StartDate"); }
+        }
+
+        private DateTime _endDate;
+
+        public DateTime EndDate
+        {
+            get { return _endDate; }
+            set { _endDate = value; OnPropertyChanged("EndDate"); }
+        }
+
+        private DateTime _endTime;
+
+        public DateTime EndTime
+        {
+            get { return _endTime; }
+            set { _endTime = value; }
+        }
+
+        private Goals selectedGoal;
+        public Goals SelectedGoal
+        {
+            get { return selectedGoal; }
+            set
+            {
+                selectedGoal = value;
+                OnPropertyChanged(nameof(SelectedGoal));
+            }
+        }
+
+        public RelayCommand ItemTap { get; }
+
+
+
+        public GoalsListViewModel(IGoalRepository goalRepository)
+        {
+            this.goalRepository = goalRepository;
+            LoadGoals();
+
+            ItemTap = new RelayCommand(ItemTapNavigate);
+        }
+
+
         private async void LoadGoals()
         {
-            Goals = new ObservableCollection<Goals>(await goalRepository.GetAllGoalsAsync());
+            GoalList = new ObservableCollection<Goals>(await goalRepository.GetAllGoalsAsync());
+            foreach (var item in GoalList)
+            {
+                this.Description = item.Description;
+                this.Title = item.Title;
+            }
         }
 
         private void AddGoal()
         {
             // Create a new instance of the GoalEditorViewModel
-            
+
             var editorViewModel = new GoalEditorViewModel(goalRepository, navigation);
 
             // Create a new instance of the GoalEditorPage and pass the GoalEditorViewModel
@@ -68,6 +145,20 @@ namespace GoalMonitoringApp.ViewModels
 
             // Navigate to the GoalEditorPage
             App.Current.MainPage.Navigation.PushAsync(editorPage);
+        }
+
+        public void ItemTapNavigate()
+        {
+            Goals selectedGoal = SelectedGoal;
+            if (selectedGoal != null)
+            {
+                // Navigate to the GoalEditorPage with the selectedGoal
+                INavigation navigation = DependencyService.Get<INavigation>();
+                if (navigation != null)
+                {
+                    navigation.PushAsync(new GoalEditorPage());
+                }
+            }
         }
     }
 }
