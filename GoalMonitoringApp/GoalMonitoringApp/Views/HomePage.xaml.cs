@@ -12,14 +12,11 @@ namespace GoalMonitoringApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        private readonly INavigation navigation;
         public HomePage()
         {
             InitializeComponent();
 
-            
-
-            HomePageViewModel homePageViewModel = new HomePageViewModel(navigation);
+            HomePageViewModel homePageViewModel = new HomePageViewModel(Navigation);
             BindingContext = homePageViewModel;
         }
     }

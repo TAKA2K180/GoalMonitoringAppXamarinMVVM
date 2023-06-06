@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text;
 using GoalMonitoringApp.Core.Models;
 using GoalMonitoringApp.Core.Services;
+using GoalMonitoringApp.Helpers;
 using GoalMonitoringApp.Views;
 using Xamarin.Forms;
 
@@ -33,8 +34,15 @@ namespace GoalMonitoringApp.ViewModels
 
         public GoalsListViewModel(IGoalRepository goalRepository)
         {
-            this.goalRepository = goalRepository;
-            LoadGoals();
+            try
+            {
+                this.goalRepository = goalRepository;
+                LoadGoals();
+            }
+            catch (Exception ex)
+            {
+                LogHelpers.SendLogToText(ex.Message);
+            }
         }
 
         private async void LoadGoals()

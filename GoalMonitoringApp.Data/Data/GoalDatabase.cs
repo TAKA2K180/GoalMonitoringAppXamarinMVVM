@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GoalMonitoringApp.Core.Classes;
 using GoalMonitoringApp.Core.Models;
 using GoalMonitoringApp.Core.Services;
+using GoalMonitoringApp.Helpers;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using SQLiteNetExtensionsAsync.Extensions;
@@ -14,6 +15,7 @@ namespace GoalMonitoringApp.Data.Data
     public class GoalDatabase : IGoalRepository
     {
         private SQLiteAsyncConnection database;
+        private AppSettings appSettings;
 
         public GoalDatabase(string dbPath)
         {
@@ -22,11 +24,7 @@ namespace GoalMonitoringApp.Data.Data
             {
                 if (t.IsFaulted && t.Exception != null)
                 {
-                    // Log the exception or handle it accordingly
-                    foreach (Exception ex in t.Exception.InnerExceptions)
-                    {
-                        Console.WriteLine("Error creating table: " + ex);
-                    }
+                    LogHelpers.SendLogToText(t.Result.ToString());
                 }
             }, TaskScheduler.Current);
         }

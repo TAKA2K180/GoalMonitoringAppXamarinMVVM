@@ -14,11 +14,9 @@ namespace GoalMonitoringApp.Classes
 {
     public class GoalFactory
     {
-        AppSettings appSettings = new AppSettings();
-        public static string dbPath = AppSettings.DatabasePath;
         public static GoalViewModel CreateGoalViewModel()
         {
-            string databasePath = dbPath;
+            string databasePath = DbHelper.cs;
             var goalDatabase = new GoalDatabase(databasePath);
             var goalRepository = new GoalRepository(goalDatabase);
             return new GoalViewModel(goalRepository);

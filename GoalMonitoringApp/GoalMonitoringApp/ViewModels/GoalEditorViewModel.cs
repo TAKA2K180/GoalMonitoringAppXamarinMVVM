@@ -60,6 +60,15 @@ namespace GoalMonitoringApp.ViewModels
             set { _endDate = value; OnPropertyChanged("EndDate"); }
         }
 
+        private DateTime _endTime;
+
+        public DateTime EndTime
+        {
+            get { return _endTime; }
+            set { _endTime = value; }
+        }
+
+
 
 
         public RelayCommand SaveGoalCommand { get; }
@@ -74,6 +83,11 @@ namespace GoalMonitoringApp.ViewModels
         {
             this.goalRepository = goalRepository;
             this.navigation = navigation;
+
+            this.TargetDate = DateTime.Now;
+            this.StartDate = DateTime.Now;
+            this.EndDate = DateTime.Now;
+            this.EndTime = DateTime.Now;
 
             SaveGoalCommand = new RelayCommand(SaveGoal);
             CancelCommand = new RelayCommand(Cancel);

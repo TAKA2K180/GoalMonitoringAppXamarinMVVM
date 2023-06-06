@@ -20,16 +20,11 @@ namespace GoalMonitoringApp.Views
         {
             InitializeComponent();
 
-            var database = new GoalDatabase(AppSettings.DatabasePath);
+
+            var database = new GoalDatabase(DbHelper.cs);
             var goalRepository = new GoalRepository(database);
             var navigation = Navigation;
-            BindingContext = new GoalEditorViewModel(goalRepository, navigation);
-        }
-
-        private GoalEditorPage homePage;
-        public GoalEditorPage HomePage
-        {
-            get { return homePage ?? (homePage = new GoalEditorPage()); }
+            BindingContext = new GoalEditorViewModel(goalRepository, Navigation);
         }
     }
 }
