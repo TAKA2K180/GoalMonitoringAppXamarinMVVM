@@ -73,6 +73,34 @@
                 <Setter Property="BarBackground" Value="{StaticResource PrimaryColor}"/>
             </Style>
 
+            <Style x:Key="GoalEditTitleLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="TextColor" Value="{StaticResource MenuLabelText}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+
+            <Style x:Key="GoalEditMenuLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="{StaticResource MenuLabelText}"/>
+            </Style>
+
+            <Style x:Key="SaveButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FF4081" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryColor}" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+
+            <Style x:Key="CancelButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#F5F5F5" />
+                <Setter Property="TextColor" Value="{StaticResource MenuLabelText}" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+            
+            
+
+
             <!-- Add more styles as needed -->
 
         </ResourceDictionary>
