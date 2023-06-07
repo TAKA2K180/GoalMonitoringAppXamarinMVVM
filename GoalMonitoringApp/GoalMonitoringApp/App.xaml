@@ -1,22 +1,80 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GoalMonitoringApp.App">
+             x:Class="GoalMonitoringApp.App" NavigationPage.HasNavigationBar="False">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="PrimaryColor">#C2185B</Color>
+            <Color x:Key="PrimaryColor">#FF4081</Color>
             <Color x:Key="SecondaryColor">#FFFFFF</Color>
+            <Color x:Key="TextBoxContent">#000000</Color>
+            <Color x:Key="MenuLabelText">#333333</Color>
+            <Color x:Key="MenuFooterText">#666666</Color>
+            <Color x:Key="BackgroundColor">#FFD3E3</Color>
+            
 
-            <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource SecondaryColor}" />
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
             </Style>
 
-            <Style TargetType="Button">
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="{StaticResource TextBoxContent}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+            </Style>
+
+            <Style x:Key="EditorStyle" TargetType="Editor">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="{StaticResource TextBoxContent}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+            </Style>
+
+            <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
                 <Setter Property="TextColor" Value="{StaticResource SecondaryColor}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="CornerRadius" Value="5" />
             </Style>
 
-            <!-- Define other styles for different controls as needed -->
+            <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+                <Setter Property="TextColor" Value="{StaticResource TextBoxContent}" />
+            </Style>
+
+            <Style x:Key="SwitchStyle" TargetType="Switch">
+                <Setter Property="ThumbColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="OnColor" Value="{StaticResource PrimaryColor}" />
+            </Style>
+
+            <Style x:Key="MenuTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="45" />
+                <Setter Property="TextColor" Value="{StaticResource MenuLabelText}" />
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+
+            <Style x:Key="MenuFooterStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource MenuFooterText}"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <Style x:Key="MenuButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="{StaticResource SecondaryColor}" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="CornerRadius" Value="10" />
+                
+            </Style>
+
+            <Style x:Key="ContentBackground" TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
+            </Style>
+
+            <Style x:Key="NavPageBg" TargetType="NavigationPage">
+                <Setter Property="BarBackground" Value="{StaticResource PrimaryColor}"/>
+            </Style>
+
+            <!-- Add more styles as needed -->
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

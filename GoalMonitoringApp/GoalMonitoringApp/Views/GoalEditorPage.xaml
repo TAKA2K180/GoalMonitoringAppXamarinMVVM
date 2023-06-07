@@ -1,47 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GoalMonitoringApp.Views.GoalEditorPage" Title="Add Goal">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
+             x:Class="GoalMonitoringApp.Views.GoalEditorPage" Title="Add Goal" Background="#ffffff"
+             xmlns:local="clr-namespace:GoalMonitoringApp.Effects" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Reference the styles from App.xaml -->
+            <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}" />
+            <Style TargetType="Entry" BasedOn="{StaticResource EntryStyle}" />
+            <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
+            <Style TargetType="DatePicker" BasedOn="{StaticResource DatePickerStyle}" />
+            <Style TargetType="Switch" BasedOn="{StaticResource SwitchStyle}" />
+            <Style TargetType="Editor" BasedOn="{StaticResource EditorStyle}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
+    <ContentPage.Content>
+        <!-- Content layout with the styled controls -->
+        <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
             <Label Text="Goal Editor"
                    FontSize="24"
                    FontAttributes="Bold"
                    TextColor="#333333"/>
 
-            <Entry Placeholder="Title"
+            <Label Text="Title"
                    FontSize="18"
-                   TextColor="#333333"
-                   BackgroundColor="#F5F5F5"
-                   HeightRequest="40"/>
+                   TextColor="#333333"/>
+            <Frame BorderColor="#22333333"
+                Padding="5"
+                CornerRadius="5">
+                <Entry Placeholder="Title"
+                   HeightRequest="40"
+                   Text="{Binding Title}"/>
+            </Frame>
 
-            <Entry Placeholder="Description"
+            <Label Text="Description"
                    FontSize="18"
-                   TextColor="#333333"
-                   BackgroundColor="#F5F5F5"
-                   HeightRequest="80"
-                   VerticalOptions="Fill"
-                   Keyboard="Text"
-                   Text="{Binding Description}"/>
+                   TextColor="#333333"/>
 
-            <DatePicker
-                Date="{Binding TargetDate}"
-                Format="MM/dd/yyyy"
+            <Frame BorderColor="#22333333"
+       Padding="5"
+       CornerRadius="5">
+                <Editor Placeholder="Description"
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="FillAndExpand"
+            AutoSize="TextChanges"
+            Keyboard="Text"
+            Text="{Binding Description}" />
+            </Frame>
+
+            <Label Text="Goal Owner" FontSize="18" TextColor="#333333" />
+            <Frame BorderColor="#22333333"
+                Padding="5"
+                CornerRadius="5">
+                <Picker Title="Select Goal Owner"
                 FontSize="18"
                 TextColor="#333333"
-                BackgroundColor="#F5F5F5"/>
+                ItemsSource="{Binding goalOwners}"
+                SelectedItem="{Binding SelectedOwner}" />
+            </Frame>
+
+            <Label Text="Target Date"
+                   FontSize="18"
+                   TextColor="#333333"/>
+
+            <Frame BorderColor="#22333333"
+                Padding="5"
+                CornerRadius="5">
+
+                <DatePicker
+                Date="{Binding TargetDate}"
+                Format="MM/dd/yyyy"
+                FontSize="18">
+                    <DatePicker.Effects>
+                        <local:DatePickerFontColorEffect/>
+                    </DatePicker.Effects>
+                </DatePicker>
+            </Frame>
 
             <StackLayout Orientation="Horizontal" Spacing="10" VerticalOptions="Center">
                 <Label Text="Is Finished?"
                        FontSize="18"
-                       TextColor="#333333"/>
+                       TextColor="#333333"
+                       />
 
-                <Switch
-                    IsToggled="{Binding IsFinished}"
-                    ThumbColor="#FF4081"
-                    OnColor="#FF4081"
-                    />
+                <Switch IsToggled="{Binding IsFinished}" ThumbColor="#C51162"/>
             </StackLayout>
 
             <Button Text="Save"
@@ -57,7 +100,6 @@
                     BackgroundColor="#F5F5F5"
                     CornerRadius="10"
                     Command="{Binding CancelCommand}"/>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

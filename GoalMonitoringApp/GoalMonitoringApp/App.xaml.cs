@@ -23,6 +23,9 @@ namespace GoalMonitoringApp
             {
                 DbHelper.cs = path.GetDatabasePath();
             }
+
+            NavigationPage navigationPage = new NavigationPage(new GoalEditorPage());
+            navigationPage.BarBackgroundColor = Color.FromHex("#FF4081");
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -14,6 +14,7 @@ namespace GoalMonitoringApp.ViewModels
 {
     public class GoalsListViewModel : BaseViewModel
     {
+        #region Variables
         private readonly IGoalRepository goalRepository;
         private ObservableCollection<Goals> goals;
         private readonly INavigation navigation;
@@ -21,8 +22,10 @@ namespace GoalMonitoringApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ObservableCollection<Goals> _list;
+        #endregion
 
 
+        #region Properties
         public ObservableCollection<Goals> GoalList
         {
             get { return goals; }
@@ -106,17 +109,24 @@ namespace GoalMonitoringApp.ViewModels
 
         public RelayCommand ItemTap { get; }
 
+        public RelayCommand AddGoalButton { get; }
+        #endregion
 
 
+
+        #region Constructor
         public GoalsListViewModel(IGoalRepository goalRepository)
         {
             this.goalRepository = goalRepository;
             LoadGoals();
 
             ItemTap = new RelayCommand(ItemTapNavigate);
+            AddGoalButton = new RelayCommand(AddGoal);
         }
+        #endregion
 
 
+        #region Methods
         private async void LoadGoals()
         {
             GoalList = new ObservableCollection<Goals>(await goalRepository.GetAllGoalsAsync());
@@ -159,6 +169,7 @@ namespace GoalMonitoringApp.ViewModels
                     navigation.PushAsync(new GoalEditorPage());
                 }
             }
-        }
+        } 
+        #endregion
     }
 }

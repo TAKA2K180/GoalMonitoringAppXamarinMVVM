@@ -25,6 +25,7 @@ namespace GoalMonitoringApp.Views
             var goalRepository = new GoalRepository(database);
             var navigation = Navigation;
             BindingContext = new GoalEditorViewModel(goalRepository, Navigation);
+
         }
     }
 }

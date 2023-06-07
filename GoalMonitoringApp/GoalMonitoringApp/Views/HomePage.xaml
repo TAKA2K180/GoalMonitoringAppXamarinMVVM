@@ -1,43 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GoalMonitoringApp.Views.HomePage" BackgroundColor="#FFFFFF">
+             x:Class="GoalMonitoringApp.Views.HomePage" Background="#F9F9F9" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand" Spacing="20" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        
+        <StackLayout VerticalOptions="FillAndExpand" Spacing="20" Padding="20" Grid.Row="1">
 
             <Label Text="Goal Monitoring App"
-                   FontSize="50"
-                   FontAttributes="Bold"
-                   TextColor="#333333"
-                   HorizontalTextAlignment="Center"/>
+           Style="{StaticResource MenuTitleStyle}"
+           HorizontalTextAlignment="Center"/>
 
             <Image Source="logo.png"
-                   HeightRequest="100"
-                   WidthRequest="100"
-                   Aspect="AspectFit"
-                   HorizontalOptions="Center"/>
+           HeightRequest="100"
+           WidthRequest="100"
+           Aspect="AspectFit"
+           HorizontalOptions="Center"/>
 
             <Button Text="View Goals"
-                    FontSize="20"
-                    TextColor="#FFFFFF"
-                    BackgroundColor="#FF4081"
-                    CornerRadius="10"
-                    Command="{Binding ViewGoalsCommand}"/>
+            Style="{StaticResource MenuButtonStyle}"
+            Command="{Binding ViewGoalsCommand}"/>
 
             <Button Text="Create Goal"
-                    FontSize="20"
-                    TextColor="#FFFFFF"
-                    BackgroundColor="#FF4081"
-                    CornerRadius="10"
-                    Command="{Binding AddEditGoalCommand}"/>
+            Style="{StaticResource MenuButtonStyle}"
+            Command="{Binding AddEditGoalCommand}"/>
 
-            <Label Text="I LOVE YOU XHYN!"
-                   FontSize="14"
-                   HorizontalOptions="Center"
-                   TextColor="#666666"
-                   VerticalTextAlignment="End"
-                   />
+            <Label Text="Pordz2023"
+           Style="{StaticResource MenuFooterStyle}"
+           HorizontalOptions="Center"
+           VerticalTextAlignment="End"/>
 
         </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

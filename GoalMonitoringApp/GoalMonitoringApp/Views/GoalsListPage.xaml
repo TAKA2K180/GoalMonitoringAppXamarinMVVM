@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GoalMonitoringApp.Views.GoalsListPage" Title="Goals List" BackgroundColor="#FFFFFF">
+             x:Class="GoalMonitoringApp.Views.GoalsListPage" Title="Goals List" Background="#ffffff" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
 
@@ -11,7 +11,7 @@
                    TextColor="#333333"/>
 
             <ListView ItemsSource="{Binding GoalList}"
-                      SeparatorVisibility="Default">
+                      SeparatorVisibility="Default" SeparatorColor="#22333333">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>

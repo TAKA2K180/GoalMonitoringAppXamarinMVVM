@@ -15,5 +15,7 @@ namespace GoalMonitoringApp.Core.Models
         public DateTime CreatedDate { get; set; }
         public DateTime? FinishedDate { get; set; } // Nullable DateTime to track finished date
         public DateTime TargetDate { get; set; }
+
+        public string Name { get; set; }
     }
 }
