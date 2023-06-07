@@ -3,103 +3,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GoalMonitoringApp.Views.GoalEditorPage" Title="Add Goal" Background="#ffffff"
              xmlns:local="clr-namespace:GoalMonitoringApp.Effects" NavigationPage.HasNavigationBar="False">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!-- Reference the styles from App.xaml -->
-            <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}" />
-            <Style TargetType="Entry" BasedOn="{StaticResource EntryStyle}" />
-            <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
-            <Style TargetType="DatePicker" BasedOn="{StaticResource DatePickerStyle}" />
-            <Style TargetType="Switch" BasedOn="{StaticResource SwitchStyle}" />
-            <Style TargetType="Editor" BasedOn="{StaticResource EditorStyle}"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.Content>
         <!-- Content layout with the styled controls -->
         <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
             <Label Text="Goal Editor"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="#333333"/>
+           Style="{StaticResource GoalEditTitleLabel}" />
 
             <Label Text="Title"
-                   FontSize="18"
-                   TextColor="#333333"/>
+           Style="{StaticResource GoalEditMenuLabel}" />
+
             <Frame BorderColor="#22333333"
-                Padding="5"
-                CornerRadius="5">
+           Padding="5"
+           CornerRadius="5">
                 <Entry Placeholder="Title"
-                   HeightRequest="40"
-                   Text="{Binding Title}"/>
+               Style="{StaticResource EntryStyle}"
+               HeightRequest="40"
+               Text="{Binding Title}" />
             </Frame>
 
             <Label Text="Description"
-                   FontSize="18"
-                   TextColor="#333333"/>
+           Style="{StaticResource GoalEditMenuLabel}" />
 
             <Frame BorderColor="#22333333"
-       Padding="5"
-       CornerRadius="5">
+           Padding="5"
+           CornerRadius="5">
                 <Editor Placeholder="Description"
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="FillAndExpand"
-            AutoSize="TextChanges"
-            Keyboard="Text"
-            Text="{Binding Description}" />
+                Style="{StaticResource EditorStyle}"
+                VerticalOptions="StartAndExpand"
+                HorizontalOptions="FillAndExpand"
+                AutoSize="TextChanges"
+                Keyboard="Text"
+                Text="{Binding Description}" />
             </Frame>
 
-            <Label Text="Goal Owner" FontSize="18" TextColor="#333333" />
+            <Label Text="Goal Owner"
+           Style="{StaticResource GoalEditMenuLabel}" />
+
             <Frame BorderColor="#22333333"
-                Padding="5"
-                CornerRadius="5">
+           Padding="5"
+           CornerRadius="5">
                 <Picker Title="Select Goal Owner"
+                Style="{StaticResource EntryStyle}"
                 FontSize="18"
-                TextColor="#333333"
                 ItemsSource="{Binding goalOwners}"
                 SelectedItem="{Binding SelectedOwner}" />
             </Frame>
 
             <Label Text="Target Date"
-                   FontSize="18"
-                   TextColor="#333333"/>
+           Style="{StaticResource GoalEditMenuLabel}" />
 
             <Frame BorderColor="#22333333"
-                Padding="5"
-                CornerRadius="5">
+           Padding="5"
+           CornerRadius="5">
 
-                <DatePicker
-                Date="{Binding TargetDate}"
-                Format="MM/dd/yyyy"
-                FontSize="18">
+                <DatePicker Date="{Binding TargetDate}"
+                    Format="MM/dd/yyyy"
+                    Style="{StaticResource DatePickerStyle}">
                     <DatePicker.Effects>
-                        <local:DatePickerFontColorEffect/>
+                        <local:DatePickerFontColorEffect />
                     </DatePicker.Effects>
                 </DatePicker>
             </Frame>
 
-            <StackLayout Orientation="Horizontal" Spacing="10" VerticalOptions="Center">
+            <StackLayout Orientation="Horizontal"
+                 Spacing="10"
+                 VerticalOptions="Center">
                 <Label Text="Is Finished?"
-                       FontSize="18"
-                       TextColor="#333333"
-                       />
+               Style="{StaticResource GoalEditMenuLabel}" />
 
-                <Switch IsToggled="{Binding IsFinished}" ThumbColor="#C51162"/>
+                <Switch IsToggled="{Binding IsFinished}"
+                ThumbColor="#C51162"
+                Style="{StaticResource SwitchStyle}" />
             </StackLayout>
 
             <Button Text="Save"
-                    FontSize="20"
-                    TextColor="#FFFFFF"
-                    BackgroundColor="#FF4081"
-                    CornerRadius="10"
-                    Command="{Binding SaveGoalCommand}"/>
+            Style="{StaticResource SaveButtonStyle}"
+            Command="{Binding SaveGoalCommand}" />
 
             <Button Text="Cancel"
-                    FontSize="20"
-                    TextColor="#333333"
-                    BackgroundColor="#F5F5F5"
-                    CornerRadius="10"
-                    Command="{Binding CancelCommand}"/>
+            Style="{StaticResource CancelButtonStyle}"
+            Command="{Binding CancelCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
