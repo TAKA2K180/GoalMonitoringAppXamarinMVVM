@@ -4,6 +4,9 @@
              x:Class="GoalMonitoringApp.App" NavigationPage.HasNavigationBar="False">
     <Application.Resources>
         <ResourceDictionary>
+            
+            <ImageSource x:Key="ResourcesImageSource">MenuLogo.png</ImageSource>
+            
             <Color x:Key="PrimaryColor">#FF4081</Color>
             <Color x:Key="SecondaryColor">#FFFFFF</Color>
             <Color x:Key="TextBoxContent">#000000</Color>

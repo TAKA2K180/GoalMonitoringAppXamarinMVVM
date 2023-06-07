@@ -164,6 +164,7 @@ namespace GoalMonitoringApp.ViewModels
                         Id = Guid.Empty,
                         IsCompleted = IsFinished,
                         FinishedDate = FinishedDate,
+                        Name = this.SelectedOwner.ToString()
                     };
 
                     // Save the goal using the repository
