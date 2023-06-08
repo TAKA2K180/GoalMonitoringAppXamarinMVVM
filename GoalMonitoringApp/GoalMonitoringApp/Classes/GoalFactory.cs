@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Foundation;
 using GoalMonitoringApp.Core.Classes;
 using GoalMonitoringApp.Core.Services;
 using GoalMonitoringApp.Data.Data;

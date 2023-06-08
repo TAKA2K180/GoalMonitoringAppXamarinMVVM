@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using GoalMonitoringApp.Commands;
 using Xamarin.Essentials;
-using Android.Widget;
 using GoalMonitoringApp.Enums;
 using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
