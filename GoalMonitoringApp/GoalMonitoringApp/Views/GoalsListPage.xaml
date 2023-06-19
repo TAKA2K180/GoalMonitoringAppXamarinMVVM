@@ -36,7 +36,7 @@
                     TextColor="#FFFFFF"
                     BackgroundColor="#FF4081"
                     CornerRadius="10"
-                    Command="{Binding AddGoalCommand}"/>
+                    Command="{Binding AddGoalButton}"/>
 
         </StackLayout>
     </ContentPage.Content>

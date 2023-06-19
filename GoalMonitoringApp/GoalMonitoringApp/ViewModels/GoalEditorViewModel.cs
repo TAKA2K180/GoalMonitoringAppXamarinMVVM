@@ -11,6 +11,7 @@ using Android.Widget;
 using GoalMonitoringApp.Enums;
 using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
+using GoalMonitoringApp.Helpers;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -65,9 +66,9 @@ namespace GoalMonitoringApp.ViewModels
             set { _startDate = value; OnPropertyChanged("StartDate"); }
         }
 
-        private DateTime _endDate;
+        private DateTime? _endDate;
 
-        public DateTime EndDate
+        public DateTime? EndDate
         {
             get { return _endDate; }
             set { _endDate = value; OnPropertyChanged("EndDate"); }
@@ -134,6 +135,16 @@ namespace GoalMonitoringApp.ViewModels
 
             SaveGoalCommand = new RelayCommand(SaveGoal);
             CancelCommand = new RelayCommand(Cancel);
+
+            if (GoalHelper.isFromList == true)
+            {
+                this.title = GoalHelper.GoalbyId.Title;
+                this.description = GoalHelper.GoalbyId.Description;
+                this.targetDate = GoalHelper.GoalbyId.TargetDate;
+                this._endDate = GoalHelper.GoalbyId.FinishedDate;
+                this.IsFinished = GoalHelper.GoalbyId.IsCompleted;
+                this.Name = GoalHelper.GoalbyId.Name;
+            }
         }
         #endregion
 

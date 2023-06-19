@@ -64,5 +64,10 @@ namespace GoalMonitoringApp.Data.Data
         {
             return await database.DeleteAsync(goal);
         }
+
+        public async Task<Goals> GetGoalsById(Guid id)
+        {
+            return await database.Table<Goals>().Where(e => e.Id == id).FirstOrDefaultAsync();
+        }
     }
 }

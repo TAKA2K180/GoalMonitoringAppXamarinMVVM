@@ -39,6 +39,15 @@ namespace GoalMonitoringApp.ViewModels
             }
         }
 
+        private Goals _goalbyId;
+
+        public Goals GoadbyId
+        {
+            get { return _goalbyId; }
+            set { _goalbyId = value; OnPropertyChanged("GoalbyId"); }
+        }
+
+
         private string title;
         public string Title
         {
@@ -157,16 +166,25 @@ namespace GoalMonitoringApp.ViewModels
             App.Current.MainPage.Navigation.PushAsync(editorPage);
         }
 
-        public void ItemTapNavigate()
+        public async void ItemTapNavigate()
         {
             Goals selectedGoal = SelectedGoal;
             if (selectedGoal != null)
             {
                 // Navigate to the GoalEditorPage with the selectedGoal
+
+                var id = await goalRepository.GetGoalsById(selectedGoal.Id);
+
+                GoadbyId = id;
+
+                GoalHelper.GoalbyId = GoadbyId;
+
+                GoalHelper.isFromList = true;
+
                 INavigation navigation = DependencyService.Get<INavigation>();
                 if (navigation != null)
                 {
-                    navigation.PushAsync(new GoalEditorPage());
+                    await navigation.PushAsync(new GoalEditorPage());
                 }
             }
         } 
