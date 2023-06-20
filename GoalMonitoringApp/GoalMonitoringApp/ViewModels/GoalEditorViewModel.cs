@@ -12,6 +12,7 @@ using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
 using GoalMonitoringApp.Helpers;
 using System.Threading.Tasks;
+using AndroidX.Transitions;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -122,8 +123,26 @@ namespace GoalMonitoringApp.ViewModels
 
         public RelayCommand SaveGoalCommand { get; }
         public RelayCommand CancelCommand { get; }
+        public RelayCommand DeleteCommand { get; }
 
         public Guid GuidFromList { get; set; } = Guid.Empty;
+
+        private bool _isFromList;
+
+        public bool IsFromList
+        {
+            get { return _isFromList; }
+            set { _isFromList = value; OnPropertyChanged("IsFromList"); }
+        }
+
+        private Visibility myVar;
+
+        public Visibility MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -137,10 +156,12 @@ namespace GoalMonitoringApp.ViewModels
             this.EndDate = DateTime.Now;
             this.EndTime = DateTime.Now;
             this.IsFinished = false;
+            this.IsFromList = false;
             goalOwners = Enum.GetValues(typeof(GoalOwner)).OfType<GoalOwner>().ToList();
 
             SaveGoalCommand = new RelayCommand(async () => await SaveGoal());
             CancelCommand = new RelayCommand(async () => await Cancel());
+            DeleteCommand = new RelayCommand(async () => await DeleteGoal());
 
             if (GoalHelper.isFromList == true)
             {
@@ -151,6 +172,7 @@ namespace GoalMonitoringApp.ViewModels
                 this.IsFinished = GoalHelper.GoalbyId.IsCompleted;
                 this.Name = GoalHelper.GoalbyId.Name;
                 this.GuidFromList = GoalHelper.GoalbyId.Id;
+                this.IsFromList = true;
             }
         }
         #endregion
@@ -204,6 +226,11 @@ namespace GoalMonitoringApp.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
+        }
+
+        public async Task DeleteGoal() 
+        {
+            await goalRepository.DeleteGoalById(GoalHelper.GoalbyId.Id);
         }
 
         public async Task Cancel()

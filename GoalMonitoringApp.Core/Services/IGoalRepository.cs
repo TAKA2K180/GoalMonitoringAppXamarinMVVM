@@ -12,5 +12,6 @@ namespace GoalMonitoringApp.Core.Services
         Task<int> DeleteGoalAsync(Goals goal);
         Task<List<Goals>> GetAllGoalsAsync();
         Task<Goals> GetGoalsById(Guid id);
+        Task DeleteGoalById(Guid id);
     }
 }
