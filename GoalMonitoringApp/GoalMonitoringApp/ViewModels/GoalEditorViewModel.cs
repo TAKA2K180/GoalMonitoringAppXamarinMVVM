@@ -12,7 +12,8 @@ using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
 using GoalMonitoringApp.Helpers;
 using System.Threading.Tasks;
-using AndroidX.Transitions;
+using GoalMonitoringApp.Views;
+using System.Collections.ObjectModel;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -116,9 +117,9 @@ namespace GoalMonitoringApp.ViewModels
         }
 
         public List<NameEnums.GoalOwner> goalOwners 
-        { 
-            get { return goalOwners; }
-            set { goalOwners = value; OnPropertyChanged("goalOwners"); }
+        {
+            get;
+            set;
         }
 
         public RelayCommand SaveGoalCommand { get; }
@@ -135,13 +136,6 @@ namespace GoalMonitoringApp.ViewModels
             set { _isFromList = value; OnPropertyChanged("IsFromList"); }
         }
 
-        private Visibility myVar;
-
-        public Visibility MyProperty
-        {
-            get { return myVar; }
-            set { myVar = value; }
-        }
 
         #endregion
 
@@ -157,6 +151,7 @@ namespace GoalMonitoringApp.ViewModels
             this.EndTime = DateTime.Now;
             this.IsFinished = false;
             this.IsFromList = false;
+            
             goalOwners = Enum.GetValues(typeof(GoalOwner)).OfType<GoalOwner>().ToList();
 
             SaveGoalCommand = new RelayCommand(async () => await SaveGoal());
@@ -231,6 +226,12 @@ namespace GoalMonitoringApp.ViewModels
         public async Task DeleteGoal() 
         {
             await goalRepository.DeleteGoalById(GoalHelper.GoalbyId.Id);
+
+            await Application.Current.MainPage.DisplayAlert("Success", "Goal deleted", "OK");
+
+            GoalHelper.isFromList = false;
+            GoalHelper.GoalbyId = null;
+            await navigation.PushAsync(new GoalsListPage());
         }
 
         public async Task Cancel()
@@ -239,7 +240,7 @@ namespace GoalMonitoringApp.ViewModels
             this.Description = "";
             GoalHelper.isFromList = false;
             GoalHelper.GoalbyId = null;
-            await navigation.PopAsync();
+            await navigation.PushAsync(new HomePage());
         }
         #endregion
     }
