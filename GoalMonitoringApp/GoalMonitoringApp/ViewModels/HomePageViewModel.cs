@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GoalMonitoringApp.Commands;
 using GoalMonitoringApp.Helpers;
@@ -19,34 +20,19 @@ namespace GoalMonitoringApp.ViewModels
 
         public HomePageViewModel(INavigation navigation)
         {
-            ViewGoalsCommand = new RelayCommand(ExecuteViewGoalsCommand);
-            AddEditGoalCommand = new RelayCommand(ExecuteAddGoalCommand);
+            ViewGoalsCommand = new RelayCommand(async () => await ExecuteViewGoalsCommand());
+            AddEditGoalCommand = new RelayCommand(async () => await ExecuteAddGoalCommand());
             this.navigation = navigation;
         }
 
-        private void ExecuteViewGoalsCommand()
+        private async Task ExecuteViewGoalsCommand()
         {
-            try
-            {
-                navigation.PushAsync(new GoalsListPage());
-            }
-            catch (Exception e)
-            {
-                LogHelpers.SendLogToText("[HomePageViewModel]" + e.Message);
-            }
+            await navigation.PushAsync(new GoalsListPage());
         }
 
-        private void ExecuteAddGoalCommand()
+        private async Task ExecuteAddGoalCommand()
         {
-            try
-            {
-                navigation.PushAsync(new GoalEditorPage());
-            }
-            catch (Exception e)
-            {
-                //Xamarin.Forms.DependencyService.Get<IToastPopUp>().ShowToastMessage(e.Message);
-                LogHelpers.SendLogToText("[HomePageViewModel]" + e.Message);
-            }
+            await navigation.PushAsync(new GoalEditorPage());
         }
     }
 }
