@@ -181,11 +181,8 @@ namespace GoalMonitoringApp.ViewModels
 
                 GoalHelper.isFromList = true;
 
-                INavigation navigation = DependencyService.Get<INavigation>();
-                if (navigation != null)
-                {
-                    await navigation.PushAsync(new GoalEditorPage());
-                }
+                var editorPage = new GoalEditorPage();
+                await App.Current.MainPage.Navigation.PushAsync(editorPage);
             }
         } 
         #endregion

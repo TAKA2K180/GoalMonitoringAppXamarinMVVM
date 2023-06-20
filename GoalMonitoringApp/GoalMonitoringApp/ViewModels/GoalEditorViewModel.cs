@@ -114,10 +114,16 @@ namespace GoalMonitoringApp.ViewModels
             set { _selectedOwner = value; OnPropertyChanged("SelectedOwner");}
         }
 
-        public List<NameEnums.GoalOwner> goalOwners { get; set; }
+        public List<NameEnums.GoalOwner> goalOwners 
+        { 
+            get { return goalOwners; }
+            set { goalOwners = value; OnPropertyChanged("goalOwners"); }
+        }
 
         public RelayCommand SaveGoalCommand { get; }
         public RelayCommand CancelCommand { get; }
+
+        public Guid GuidFromList { get; set; } = Guid.Empty;
         #endregion
 
         #region Constructor
@@ -144,6 +150,7 @@ namespace GoalMonitoringApp.ViewModels
                 this._endDate = GoalHelper.GoalbyId.FinishedDate;
                 this.IsFinished = GoalHelper.GoalbyId.IsCompleted;
                 this.Name = GoalHelper.GoalbyId.Name;
+                this.GuidFromList = GoalHelper.GoalbyId.Id;
             }
         }
         #endregion
@@ -172,7 +179,7 @@ namespace GoalMonitoringApp.ViewModels
                         Description = Description,
                         TargetDate = TargetDate,
                         CreatedDate = DateTime.Now,
-                        Id = Guid.Empty,
+                        Id = GuidFromList,
                         IsCompleted = IsFinished,
                         FinishedDate = FinishedDate,
                         Name = this.SelectedOwner.ToString()
@@ -202,6 +209,10 @@ namespace GoalMonitoringApp.ViewModels
         public void Cancel()
         {
             navigation.PopAsync();
+            this.Title = "";
+            this.Description = "";
+            GoalHelper.isFromList = false;
+            GoalHelper.GoalbyId = null;
         }
         #endregion
     }

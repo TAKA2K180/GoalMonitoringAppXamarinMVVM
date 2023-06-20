@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GoalMonitoringApp.Core.Models;
 
 namespace GoalMonitoringApp.Helpers
 {
-    class GoalHelper
+    public class GoalHelper
     {
+        public static Goals GoalbyId;
+
+        public static bool isFromList = false;
     }
 }

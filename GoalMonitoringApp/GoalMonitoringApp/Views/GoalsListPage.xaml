@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Xamarin.CommunityToolkit.Behaviors;assembly=Xamarin.CommunityToolkit"
              x:Class="GoalMonitoringApp.Views.GoalsListPage" Title="Goals List" Background="#ffffff" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
@@ -11,8 +12,21 @@
                    TextColor="#333333"/>
 
             <ListView ItemsSource="{Binding GoalList}"
-                      SeparatorVisibility="Default" SeparatorColor="#22333333">
-
+                      SeparatorVisibility="Default" SeparatorColor="#22333333" SelectedItem="{Binding SelectedGoal, Mode=TwoWay}" >
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="ItemSelected" Command="{Binding ItemTap}" CommandParameter="{Binding SelectedItem}" />
+                </ListView.Behaviors>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#FF4081" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -28,7 +42,6 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
 
             <Button Text="Add Goal"

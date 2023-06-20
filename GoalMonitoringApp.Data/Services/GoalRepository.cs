@@ -27,6 +27,11 @@ namespace GoalMonitoringApp.Data.Services
             return database.GetAllGoalsAsync();
         }
 
+        public Task<Goals> GetGoalsById(Guid id)
+        {
+            return database.GetGoalsById(id);
+        }
+
         public Task<int> SaveGoalAsync(Goals goal)
         {
             return database.SaveGoalAsync(goal);
