@@ -225,13 +225,19 @@ namespace GoalMonitoringApp.ViewModels
 
         public async Task DeleteGoal() 
         {
-            await goalRepository.DeleteGoalById(GoalHelper.GoalbyId.Id);
+            bool result = await Application.Current.MainPage.DisplayAlert("Confirmation", "Delete this goal?", "Yes", "No");
 
-            await Application.Current.MainPage.DisplayAlert("Success", "Goal deleted", "OK");
+            if (result) 
+            {
+                await goalRepository.DeleteGoalById(GoalHelper.GoalbyId.Id);
 
-            GoalHelper.isFromList = false;
-            GoalHelper.GoalbyId = null;
-            await navigation.PushAsync(new GoalsListPage());
+                await Application.Current.MainPage.DisplayAlert("Success", "Goal deleted", "OK");
+
+                GoalHelper.isFromList = false;
+                GoalHelper.GoalbyId = null;
+                await navigation.PushAsync(new GoalsListPage());
+            }
+            
         }
 
         public async Task Cancel()
