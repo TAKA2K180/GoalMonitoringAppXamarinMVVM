@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using GoalMonitoringApp.Commands;
 using GoalMonitoringApp.Core.Models;
 using GoalMonitoringApp.Core.Services;
@@ -38,6 +39,15 @@ namespace GoalMonitoringApp.ViewModels
                 }
             }
         }
+
+        private Goals _goalbyId;
+
+        public Goals GoadbyId
+        {
+            get { return _goalbyId; }
+            set { _goalbyId = value; OnPropertyChanged("GoalbyId"); }
+        }
+
 
         private string title;
         public string Title
@@ -118,16 +128,16 @@ namespace GoalMonitoringApp.ViewModels
         public GoalsListViewModel(IGoalRepository goalRepository)
         {
             this.goalRepository = goalRepository;
-            LoadGoals();
+            Task.Run(async () => await LoadGoals());
 
-            ItemTap = new RelayCommand(ItemTapNavigate);
-            AddGoalButton = new RelayCommand(AddGoal);
+            ItemTap = new RelayCommand(async () => await ItemTapNavigate());
+            AddGoalButton = new RelayCommand(async () => await AddGoal());
         }
         #endregion
 
 
         #region Methods
-        private async void LoadGoals()
+        private async Task LoadGoals()
         {
             GoalList = new ObservableCollection<Goals>(await goalRepository.GetAllGoalsAsync());
             foreach (var item in GoalList)
@@ -137,7 +147,7 @@ namespace GoalMonitoringApp.ViewModels
             }
         }
 
-        private void AddGoal()
+        private async Task AddGoal()
         {
             // Create a new instance of the GoalEditorViewModel
 
@@ -150,24 +160,30 @@ namespace GoalMonitoringApp.ViewModels
             editorViewModel.GoalAdded += (sender, args) =>
             {
                 // Reload the goals list after a new goal is added
-                LoadGoals();
+                Task.Run(async () => await LoadGoals());
             };
 
             // Navigate to the GoalEditorPage
-            App.Current.MainPage.Navigation.PushAsync(editorPage);
+            await App.Current.MainPage.Navigation.PushAsync(editorPage);
         }
 
-        public void ItemTapNavigate()
+        public async Task ItemTapNavigate()
         {
             Goals selectedGoal = SelectedGoal;
             if (selectedGoal != null)
             {
                 // Navigate to the GoalEditorPage with the selectedGoal
-                INavigation navigation = DependencyService.Get<INavigation>();
-                if (navigation != null)
-                {
-                    navigation.PushAsync(new GoalEditorPage());
-                }
+
+                var id = await goalRepository.GetGoalsById(selectedGoal.Id);
+
+                GoadbyId = id;
+
+                GoalHelper.GoalbyId = GoadbyId;
+
+                GoalHelper.isFromList = true;
+
+                var editorPage = new GoalEditorPage();
+                await App.Current.MainPage.Navigation.PushAsync(editorPage);
             }
         } 
         #endregion

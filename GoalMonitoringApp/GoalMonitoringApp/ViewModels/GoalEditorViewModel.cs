@@ -10,6 +10,8 @@ using Xamarin.Essentials;
 using GoalMonitoringApp.Enums;
 using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
+using GoalMonitoringApp.Helpers;
+using System.Threading.Tasks;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -64,9 +66,9 @@ namespace GoalMonitoringApp.ViewModels
             set { _startDate = value; OnPropertyChanged("StartDate"); }
         }
 
-        private DateTime _endDate;
+        private DateTime? _endDate;
 
-        public DateTime EndDate
+        public DateTime? EndDate
         {
             get { return _endDate; }
             set { _endDate = value; OnPropertyChanged("EndDate"); }
@@ -112,10 +114,16 @@ namespace GoalMonitoringApp.ViewModels
             set { _selectedOwner = value; OnPropertyChanged("SelectedOwner");}
         }
 
-        public List<NameEnums.GoalOwner> goalOwners { get; set; }
+        public List<NameEnums.GoalOwner> goalOwners 
+        { 
+            get { return goalOwners; }
+            set { goalOwners = value; OnPropertyChanged("goalOwners"); }
+        }
 
         public RelayCommand SaveGoalCommand { get; }
         public RelayCommand CancelCommand { get; }
+
+        public Guid GuidFromList { get; set; } = Guid.Empty;
         #endregion
 
         #region Constructor
@@ -131,14 +139,25 @@ namespace GoalMonitoringApp.ViewModels
             this.IsFinished = false;
             goalOwners = Enum.GetValues(typeof(GoalOwner)).OfType<GoalOwner>().ToList();
 
-            SaveGoalCommand = new RelayCommand(SaveGoal);
-            CancelCommand = new RelayCommand(Cancel);
+            SaveGoalCommand = new RelayCommand(async () => await SaveGoal());
+            CancelCommand = new RelayCommand(async () => await Cancel());
+
+            if (GoalHelper.isFromList == true)
+            {
+                this.title = GoalHelper.GoalbyId.Title;
+                this.description = GoalHelper.GoalbyId.Description;
+                this.targetDate = GoalHelper.GoalbyId.TargetDate;
+                this._endDate = GoalHelper.GoalbyId.FinishedDate;
+                this.IsFinished = GoalHelper.GoalbyId.IsCompleted;
+                this.Name = GoalHelper.GoalbyId.Name;
+                this.GuidFromList = GoalHelper.GoalbyId.Id;
+            }
         }
         #endregion
 
 
         #region Methods
-        private async void SaveGoal()
+        private async Task SaveGoal()
         {
             try
             {
@@ -160,7 +179,7 @@ namespace GoalMonitoringApp.ViewModels
                         Description = Description,
                         TargetDate = TargetDate,
                         CreatedDate = DateTime.Now,
-                        Id = Guid.Empty,
+                        Id = GuidFromList,
                         IsCompleted = IsFinished,
                         FinishedDate = FinishedDate,
                         Name = this.SelectedOwner.ToString()
@@ -187,9 +206,13 @@ namespace GoalMonitoringApp.ViewModels
             }
         }
 
-        public void Cancel()
+        public async Task Cancel()
         {
-            navigation.PopAsync();
+            this.Title = "";
+            this.Description = "";
+            GoalHelper.isFromList = false;
+            GoalHelper.GoalbyId = null;
+            await navigation.PopAsync();
         }
         #endregion
     }
