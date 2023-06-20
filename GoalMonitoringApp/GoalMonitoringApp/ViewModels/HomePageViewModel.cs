@@ -20,6 +20,8 @@ namespace GoalMonitoringApp.ViewModels
 
         public HomePageViewModel(INavigation navigation)
         {
+            GoalHelper.isFromList = false;
+            GoalHelper.GoalbyId = null;
             ViewGoalsCommand = new RelayCommand(async () => await ExecuteViewGoalsCommand());
             AddEditGoalCommand = new RelayCommand(async () => await ExecuteAddGoalCommand());
             this.navigation = navigation;
