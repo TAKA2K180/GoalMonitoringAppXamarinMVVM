@@ -12,6 +12,7 @@ using GoalMonitoringApp.Enums;
 using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
 using GoalMonitoringApp.Helpers;
+using System.Threading.Tasks;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -139,8 +140,8 @@ namespace GoalMonitoringApp.ViewModels
             this.IsFinished = false;
             goalOwners = Enum.GetValues(typeof(GoalOwner)).OfType<GoalOwner>().ToList();
 
-            SaveGoalCommand = new RelayCommand(SaveGoal);
-            CancelCommand = new RelayCommand(Cancel);
+            SaveGoalCommand = new RelayCommand(async () => await SaveGoal());
+            CancelCommand = new RelayCommand(async () => await Cancel());
 
             if (GoalHelper.isFromList == true)
             {
@@ -157,7 +158,7 @@ namespace GoalMonitoringApp.ViewModels
 
 
         #region Methods
-        private async void SaveGoal()
+        private async Task SaveGoal()
         {
             try
             {
@@ -206,13 +207,13 @@ namespace GoalMonitoringApp.ViewModels
             }
         }
 
-        public void Cancel()
+        public async Task Cancel()
         {
-            navigation.PopAsync();
             this.Title = "";
             this.Description = "";
             GoalHelper.isFromList = false;
             GoalHelper.GoalbyId = null;
+            await navigation.PopAsync();
         }
         #endregion
     }
