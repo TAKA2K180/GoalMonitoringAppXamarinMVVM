@@ -12,6 +12,8 @@ using static GoalMonitoringApp.Enums.NameEnums;
 using System.Linq;
 using GoalMonitoringApp.Helpers;
 using System.Threading.Tasks;
+using GoalMonitoringApp.Views;
+using System.Collections.ObjectModel;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -115,15 +117,26 @@ namespace GoalMonitoringApp.ViewModels
         }
 
         public List<NameEnums.GoalOwner> goalOwners 
-        { 
-            get { return goalOwners; }
-            set { goalOwners = value; OnPropertyChanged("goalOwners"); }
+        {
+            get;
+            set;
         }
 
         public RelayCommand SaveGoalCommand { get; }
         public RelayCommand CancelCommand { get; }
+        public RelayCommand DeleteCommand { get; }
 
         public Guid GuidFromList { get; set; } = Guid.Empty;
+
+        private bool _isFromList;
+
+        public bool IsFromList
+        {
+            get { return _isFromList; }
+            set { _isFromList = value; OnPropertyChanged("IsFromList"); }
+        }
+
+
         #endregion
 
         #region Constructor
@@ -137,10 +150,13 @@ namespace GoalMonitoringApp.ViewModels
             this.EndDate = DateTime.Now;
             this.EndTime = DateTime.Now;
             this.IsFinished = false;
+            this.IsFromList = false;
+            
             goalOwners = Enum.GetValues(typeof(GoalOwner)).OfType<GoalOwner>().ToList();
 
             SaveGoalCommand = new RelayCommand(async () => await SaveGoal());
             CancelCommand = new RelayCommand(async () => await Cancel());
+            DeleteCommand = new RelayCommand(async () => await DeleteGoal());
 
             if (GoalHelper.isFromList == true)
             {
@@ -151,6 +167,7 @@ namespace GoalMonitoringApp.ViewModels
                 this.IsFinished = GoalHelper.GoalbyId.IsCompleted;
                 this.Name = GoalHelper.GoalbyId.Name;
                 this.GuidFromList = GoalHelper.GoalbyId.Id;
+                this.IsFromList = true;
             }
         }
         #endregion
@@ -206,13 +223,24 @@ namespace GoalMonitoringApp.ViewModels
             }
         }
 
+        public async Task DeleteGoal() 
+        {
+            await goalRepository.DeleteGoalById(GoalHelper.GoalbyId.Id);
+
+            await Application.Current.MainPage.DisplayAlert("Success", "Goal deleted", "OK");
+
+            GoalHelper.isFromList = false;
+            GoalHelper.GoalbyId = null;
+            await navigation.PushAsync(new GoalsListPage());
+        }
+
         public async Task Cancel()
         {
             this.Title = "";
             this.Description = "";
             GoalHelper.isFromList = false;
             GoalHelper.GoalbyId = null;
-            await navigation.PopAsync();
+            await navigation.PushAsync(new HomePage());
         }
         #endregion
     }

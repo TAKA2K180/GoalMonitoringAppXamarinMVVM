@@ -6,6 +6,7 @@
     <ContentPage.Content>
         <!-- Content layout with the styled controls -->
         <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
+            
             <Label Text="Goal Editor"
            Style="{StaticResource GoalEditTitleLabel}" />
 
@@ -79,6 +80,10 @@
             <Button Text="Save"
             Style="{StaticResource SaveButtonStyle}"
             Command="{Binding SaveGoalCommand}" />
+
+            <Button x:Name="DeleteButton" Text="Delete Goal"
+            Style="{StaticResource SaveButtonStyle}"
+            Command="{Binding DeleteCommand}" IsEnabled="{Binding IsFromList}"/>
 
             <Button Text="Cancel"
             Style="{StaticResource CancelButtonStyle}"
