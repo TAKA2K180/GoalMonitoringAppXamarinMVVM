@@ -29,7 +29,7 @@
             Style="{StaticResource MenuButtonStyle}"
             Command="{Binding AddEditGoalCommand}"/>
 
-                <Label Text="I LOVE YOU XHYN!"
+                <Label Text="Pordz2023 V1.0.21"
            Style="{StaticResource MenuFooterStyle}"
            HorizontalOptions="Center"
            VerticalTextAlignment="End"/>
