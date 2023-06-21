@@ -28,5 +28,10 @@ namespace GoalMonitoringApp.Core.Services
         {
             return _goalRepository.SaveGoalAsync(goal);
         }
+
+        public Task<Goals> GetGoalsById(Guid id)
+        {
+            return _goalRepository.GetGoalsById(id);
+        }
     }
 }

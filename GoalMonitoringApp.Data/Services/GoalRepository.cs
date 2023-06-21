@@ -22,9 +22,19 @@ namespace GoalMonitoringApp.Data.Services
             return database.DeleteGoalAsync(goal);
         }
 
+        public async Task DeleteGoalById(Guid id)
+        {
+            await database.DeleteGoalById(id);
+        }
+
         public Task<List<Goals>> GetAllGoalsAsync()
         {
             return database.GetAllGoalsAsync();
+        }
+
+        public Task<Goals> GetGoalsById(Guid id)
+        {
+            return database.GetGoalsById(id);
         }
 
         public Task<int> SaveGoalAsync(Goals goal)

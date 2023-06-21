@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Xamarin.CommunityToolkit.Behaviors;assembly=Xamarin.CommunityToolkit"
              x:Class="GoalMonitoringApp.Views.GoalsListPage" Title="Goals List" Background="#ffffff" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
@@ -11,15 +12,29 @@
                    TextColor="#333333"/>
 
             <ListView ItemsSource="{Binding GoalList}"
-                      SeparatorVisibility="Default" SeparatorColor="#22333333">
-
+                      SeparatorVisibility="Default" SeparatorColor="#22333333" SelectedItem="{Binding SelectedGoal, Mode=TwoWay}" >
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior EventName="ItemSelected" Command="{Binding ItemTap}" CommandParameter="{Binding SelectedItem}" />
+                </ListView.Behaviors>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#FF4081" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Spacing="5">
                                 <Label Text="{Binding Title, StringFormat='Title: {0}'}"
                                        FontSize="15"
-                                       TextColor="#333333"/>
+                                       TextColor="#333333"
+                                       FontAttributes="Bold"/>
                                 <Label Text="{Binding Description, StringFormat='Description: {0}'}"
                                        FontSize="18"
                                        TextColor="#666666"/>
@@ -27,7 +42,6 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
 
             <Button Text="Add Goal"
@@ -35,7 +49,7 @@
                     TextColor="#FFFFFF"
                     BackgroundColor="#FF4081"
                     CornerRadius="10"
-                    Command="{Binding AddGoalCommand}"/>
+                    Command="{Binding AddGoalButton}"/>
 
         </StackLayout>
     </ContentPage.Content>

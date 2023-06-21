@@ -8,28 +8,28 @@
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-        
-        <StackLayout VerticalOptions="FillAndExpand" Spacing="20" Padding="20" Grid.Row="1">
 
-            <Label Text="Goal Monitoring App"
-           Style="{StaticResource MenuTitleStyle}"
-           HorizontalTextAlignment="Center"/>
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="20" Padding="20" Grid.Row="1">
 
-            <Image Source="logo.png"
-           HeightRequest="100"
-           WidthRequest="100"
+                <Image Source="{StaticResource ResourcesImageSource}"
+           HeightRequest="250"
+           WidthRequest="250"
            Aspect="AspectFit"
            HorizontalOptions="Center"/>
 
-            <Button Text="View Goals"
+                <Label Text="We GROW"
+           Style="{StaticResource MenuTitleStyle}"
+           HorizontalTextAlignment="Center"/>
+
+                <Button Text="View Goals"
             Style="{StaticResource MenuButtonStyle}"
             Command="{Binding ViewGoalsCommand}"/>
 
-            <Button Text="Create Goal"
+                <Button Text="Create a Goal"
             Style="{StaticResource MenuButtonStyle}"
             Command="{Binding AddEditGoalCommand}"/>
 
-            <Label Text="Pordz2023"
+                <Label Text="Pordz2023 V1.0.21"
            Style="{StaticResource MenuFooterStyle}"
            HorizontalOptions="Center"
            VerticalTextAlignment="End"/>
