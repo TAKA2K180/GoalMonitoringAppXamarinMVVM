@@ -9,32 +9,52 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        BackgroundColor="Transparent"
+                        Command="{Binding LeftButtonCommand}" />
+
+                <Button Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding MiddleButtonCommand}" />
+
+                <Button Grid.Column="2"
+                        BackgroundColor="Transparent"
+                        Command="{Binding RightButtonCommand}" />
+            </Grid>
+
             <StackLayout VerticalOptions="FillAndExpand" Spacing="20" Padding="20" Grid.Row="1">
 
                 <Image Source="{StaticResource ResourcesImageSource}"
-           HeightRequest="250"
-           WidthRequest="250"
-           Aspect="AspectFit"
-           HorizontalOptions="Center"/>
+                       HeightRequest="250"
+                       WidthRequest="250"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"/>
 
                 <Label Text="We GROW"
-           Style="{StaticResource MenuTitleStyle}"
-           HorizontalTextAlignment="Center"/>
+                       Style="{StaticResource MenuTitleStyle}"
+                       HorizontalTextAlignment="Center"/>
 
                 <Button Text="View Goals"
-            Style="{StaticResource MenuButtonStyle}"
-            Command="{Binding ViewGoalsCommand}"/>
+                        Style="{StaticResource MenuButtonStyle}"
+                        Command="{Binding ViewGoalsCommand}"/>
 
                 <Button Text="Create a Goal"
-            Style="{StaticResource MenuButtonStyle}"
-            Command="{Binding AddEditGoalCommand}"/>
+                        Style="{StaticResource MenuButtonStyle}"
+                        Command="{Binding AddEditGoalCommand}"/>
 
                 <Label Text="I LOVE YOU XHYN!"
-           Style="{StaticResource MenuFooterStyle}"
-           HorizontalOptions="Center"
-           VerticalTextAlignment="End"/>
+                       Style="{StaticResource MenuFooterStyle}"
+                       HorizontalOptions="Center"
+                       VerticalTextAlignment="End"/>
 
-        </StackLayout>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
