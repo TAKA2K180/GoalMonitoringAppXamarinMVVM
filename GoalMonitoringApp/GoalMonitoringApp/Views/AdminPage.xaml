@@ -1,12 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GoalMonitoringApp.Views.AdminPage">
+             x:Class="GoalMonitoringApp.Views.AdminPage" Title="Admin Page" NavigationPage.HasNavigationBar="False" Background="#ffffff">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20">
+            <Label Text="Admin Page"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#333333"/>
+            <!-- Display the list of items -->
+            <ListView ItemsSource="{Binding GoalList}" SelectedItem="{Binding SelectedItem}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                <CheckBox IsChecked="{Binding IsItemSelected}" VerticalOptions="Center" />
+                                <Label Text="{Binding Title, StringFormat='Title: {0}'}"
+                                       FontSize="15"
+                                       TextColor="#333333"
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding Description, StringFormat='Description: {0}'}"
+                                       FontSize="18"
+                                       TextColor="#666666"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Add a button to delete a selected item -->
+            <Button Text="Delete Item"
+                    Command="{Binding DeleteSelected}" Style="{StaticResource SaveButtonStyle}" />
+
+            <Button Text="Archive Item"
+                    Command="{Binding ArchiveSelected}" Style="{StaticResource SaveButtonStyle}" />
+            <Button Text="Home"
+                    Command="{Binding HomeCommand}" Style="{StaticResource SaveButtonStyle}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

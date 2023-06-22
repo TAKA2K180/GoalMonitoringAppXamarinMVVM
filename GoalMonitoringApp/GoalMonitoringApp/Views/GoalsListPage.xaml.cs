@@ -41,7 +41,7 @@ namespace GoalMonitoringApp.Views
             }
             catch (Exception ex)
             {
-                LogHelpers.SendLogToText(ex.Message);
+                //LogHelpers.SendLogToText(ex.Message);
             }
         }
     }

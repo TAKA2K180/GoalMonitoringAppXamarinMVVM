@@ -65,27 +65,27 @@ namespace GoalMonitoringApp.ViewModels
 
         private void ShowAdminPageFromLeft()
         {
-            Task.Run(async () => await CheckButtonSequence(0));
+            CheckButtonSequence(0);
         }
 
         private void ShowAdminPageFromMiddle()
         {
-            Task.Run(async () => await CheckButtonSequence(1));
+            CheckButtonSequence(1);
         }
 
         private void ShowAdminPageFromRight()
         {
-            Task.Run(async () => await CheckButtonSequence(2));
+            CheckButtonSequence(2);
         }
 
-        private async Task CheckButtonSequence(int buttonIndex)
+        private void CheckButtonSequence(int buttonIndex)
         {
             if (buttonIndex == requiredButtonSequence[buttonSequenceIndex])
             {
                 buttonSequenceIndex++;
                 if (buttonSequenceIndex == requiredButtonSequence.Length)
                 {
-                    await navigation.PushAsync(new AdminPage());
+                    navigation.PushAsync(new AdminPage());
                     buttonSequenceIndex = 0;
                 }
             }

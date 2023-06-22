@@ -10,6 +10,7 @@ using GoalMonitoringApp.Commands;
 using GoalMonitoringApp.Helpers;
 using GoalMonitoringApp.Views;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace GoalMonitoringApp.ViewModels
 {
@@ -17,6 +18,7 @@ namespace GoalMonitoringApp.ViewModels
     {
         private ObservableCollection<Goals> goals;
         private readonly IGoalRepository goalRepository;
+        private readonly INavigation navigation;
 
         #region Properties
         private string title;
@@ -120,19 +122,6 @@ namespace GoalMonitoringApp.ViewModels
             set { _goalbyId = value; OnPropertyChanged("GoalbyId"); }
         }
 
-        public RelayCommand GetCheckedItem { get; }
-        #endregion
-
-        #region Constructor
-        public AdminViewModel(IGoalRepository goalRepository)
-        {
-            this.goalRepository = goalRepository;
-
-            Task.Run(async () => await LoadGoals());
-
-            GetCheckedItem = new RelayCommand(async () => await GetCheckedGoal());
-        }
-
         private List<Goals> selectedGoal;
         public List<Goals> SelectedGoal
         {
@@ -143,8 +132,36 @@ namespace GoalMonitoringApp.ViewModels
                 OnPropertyChanged(nameof(SelectedGoal));
             }
         }
+
+        private bool _isItemSelected;
+
+        public bool IsItemSelected
+        {
+            get { return _isItemSelected; }
+            set { _isItemSelected = value; OnPropertyChanged("IsItemSelected"); }
+        }
+
+        public RelayCommand GetCheckedItem { get; }
+        public RelayCommand DeleteSelected { get; }
+        public RelayCommand ArchiveSelected { get; }
+        public RelayCommand HomeCommand { get; }
         #endregion
 
+        #region Constructor
+        public AdminViewModel(IGoalRepository goalRepository)
+        {
+            this.goalRepository = goalRepository;
+
+            Task.Run(async () => await LoadGoals());
+
+            GetCheckedItem = new RelayCommand(async () => await GetCheckedGoal());
+            DeleteSelected = new RelayCommand(async () => await DeleteCheckedGoal());
+            ArchiveSelected = new RelayCommand(async () => await ArchiveSelectedGoal());
+            HomeCommand = new RelayCommand(async () => await HomeClick());
+        }
+        #endregion
+
+        #region Methods
         private async Task LoadGoals()
         {
             GoalList = new ObservableCollection<Goals>(await goalRepository.GetAllGoalsAsync());
@@ -157,33 +174,79 @@ namespace GoalMonitoringApp.ViewModels
 
         private async Task GetCheckedGoal()
         {
-            List<Goals> selectedGoal = SelectedGoal;
+            ObservableCollection<Goals> selectedGoal = new ObservableCollection<Goals>();
 
-            if (selectedGoal != null)
+            foreach (var item in GoalList)
             {
-                foreach (var item in selectedGoal)
-                {
-                    var id = await goalRepository.GetGoalsById(item.Id);
+                var id = await goalRepository.GetGoalsById(item.Id);
 
-                    selectedGoal.Add(id);
-                }
+                selectedGoal.Add(id);
+                IsItemSelected = true;
             }
         }
 
         private async Task DeleteCheckedGoal()
         {
-            bool result = await Application.Current.MainPage.DisplayAlert("Confirmation", "Delete this goal?", "Yes", "No");
-
-            if (result)
+            try
             {
-                foreach (var item in selectedGoal)
+                await GetCheckedGoal();
+                if (selectedGoal != null)
                 {
-                    await goalRepository.DeleteGoalById(item.Id);
+                    bool result = await Application.Current.MainPage.DisplayAlert("Confirmation", "Delete selected goal?", "Yes", "No");
+
+                    if (result)
+                    {
+                        foreach (var item in selectedGoal)
+                        {
+                            await goalRepository.DeleteGoalById(item.Id);
+                        }
+                    }
                 }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Notice", "Please select a goal first", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
-        private async Task ArchiveSelectedGoal
+        private async Task ArchiveSelectedGoal()
+        {
+            try
+            {
+                await GetCheckedGoal();
+                if (selectedGoal != null)
+                {
+                    bool result = await Application.Current.MainPage.DisplayAlert("Confirmation", "Archive selected goal?", "Yes", "No");
+                    if (result)
+                    {
+                        foreach (var item in selectedGoal)
+                        {
+                            var archive = new Goals { Id = item.Id, isArchived = true };
+                            await goalRepository.SaveGoalAsync(archive);
+                        }
+                    }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Notice", "Please select a goal first", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            }
+
+        }
+
+        private async Task HomeClick()
+        {
+            await navigation.PushAsync(new HomePage());
+        }
+        #endregion
 
     }
 }

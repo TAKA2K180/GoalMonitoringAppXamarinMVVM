@@ -208,7 +208,7 @@ namespace GoalMonitoringApp.ViewModels
                         IsCompleted = IsFinished,
                         FinishedDate = FinishedDate,
                         Name = this.SelectedOwner.ToString(),
-                        isArchived = this.IsArchived
+                        isArchived = false
                     };
 
                     // Save the goal using the repository
