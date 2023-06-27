@@ -38,13 +38,13 @@ namespace GoalMonitoringApp
                 {
                     // Log or handle each inner exception here
                     // You can access the inner exception's details using innerException.Message, innerException.StackTrace, etc.
-                    LogHelpers.SendLogToText(innerException.Message);
+                    //LogHelpers.SendLogToText(innerException.Message);
                 }
             }
             else
             {
                 var exception = e.ExceptionObject as Exception;
-                LogHelpers.SendLogToText(exception.Message);
+                //LogHelpers.SendLogToText(exception.Message);
                 // Log or handle the exception here
             }
 
