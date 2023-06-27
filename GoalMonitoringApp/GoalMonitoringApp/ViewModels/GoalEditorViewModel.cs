@@ -136,6 +136,14 @@ namespace GoalMonitoringApp.ViewModels
             set { _isFromList = value; OnPropertyChanged("IsFromList"); }
         }
 
+        private bool _isArchived;
+
+        public bool IsArchived
+        {
+            get { return _isArchived; }
+            set { _isArchived = value; OnPropertyChanged("IsArchived"); }
+        }
+
 
         #endregion
 
@@ -199,7 +207,8 @@ namespace GoalMonitoringApp.ViewModels
                         Id = GuidFromList,
                         IsCompleted = IsFinished,
                         FinishedDate = FinishedDate,
-                        Name = this.SelectedOwner.ToString()
+                        Name = this.SelectedOwner.ToString(),
+                        isArchived = false
                     };
 
                     // Save the goal using the repository

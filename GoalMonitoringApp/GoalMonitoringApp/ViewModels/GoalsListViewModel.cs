@@ -142,8 +142,11 @@ namespace GoalMonitoringApp.ViewModels
             GoalList = new ObservableCollection<Goals>(await goalRepository.GetAllGoalsAsync());
             foreach (var item in GoalList)
             {
-                this.Description = item.Description;
-                this.Title = item.Title;
+                if (item.isArchived == false)
+                {
+                    this.Description = item.Description;
+                    this.Title = item.Title;
+                }
             }
         }
 
