@@ -9,7 +9,10 @@ namespace GoalMonitoringApp.Enums
         public enum GoalOwner
         {
             Roi,
-            Xhyn,
+            JohnnySins,
+            WallyBayola,
+            ChitoMiranda,
+            PaoloBediones,
             Both
         }
     }
