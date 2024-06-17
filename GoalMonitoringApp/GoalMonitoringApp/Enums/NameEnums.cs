@@ -13,6 +13,7 @@ namespace GoalMonitoringApp.Enums
             WallyBayola,
             ChitoMiranda,
             PaoloBediones,
+            HaydenKho,
             Both
         }
     }
